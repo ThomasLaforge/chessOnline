@@ -285,6 +285,8 @@ $(function(){
 			}
 	}
 
+	$('#game-interface').hide();
+
 	//Variables globales
 	var $board = $("#board");
 	haveToShoWPossibilities = true;
@@ -306,10 +308,6 @@ $(function(){
 		tabPieces.push(thisPionWhite);
 		tabPieces.push(thisPionBlack);
 	};
-
-	//main
-	initBoard();
-	startMatch();
 
 	//Functions
 	function initBoard(){
@@ -347,6 +345,14 @@ $(function(){
 	}
 
 	//Match
+	function startGame(){
+		$('#game-interface').show();
+		initBoard();
+		startMatch();
+		$('#p1-name').html(nomP1);
+		$('#p2-name').html(nomP2);
+	}
+
 	function startMatch(){
 		echecEtMat = false;
 		tour='white'; //Or black
@@ -357,8 +363,19 @@ $(function(){
 	}
 
 //Events
+
+	$('body').on('click', '#btn-start-game', function(){
+		nomP1 = $('#name-player-1').val();
+		nomP2 = $('#name-player-2').val();
+		if(nomP1.length>0 && nomP2.length>0){
+			startGame();
+			$('.popupStart').hide();
+		}
+		
+	});
+
 	//Initialisation du plateau
-	$('#btn-new-game').click(function(){
+	$('body').on('click', '#btn-new-game', function(){
 		initBoard();
 		startMatch();
 	});
