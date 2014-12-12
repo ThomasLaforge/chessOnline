@@ -4,19 +4,32 @@
           box-sizing: border-box;
 }
 body{
-    width:1100px;
-    margin: auto;
+    
+}
+.container{
+	width:960px;
+	margin: auto;
+}
+
+.board{
+	margin-left:100px;
+	width:504px;
+	height:504px;
+	float:left;
+}
+
+.board-info-players{
+	margin-left:624px;
+	width:330px;
+}
+
+.clear{
+	clear:both;
 }
 
 h1{
 	text-align: center;
 }
-
-.board{
-	margin: auto;
-	width:504px;
-}
-
 .case{
 	border:1px solid black;
 	heigth:61px;

@@ -1,5 +1,4 @@
 historique
-nom des joueurs
 Echec
 Echec et mat
 roc

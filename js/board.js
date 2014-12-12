@@ -13,7 +13,7 @@ $(function(){
 
     	//Méthodes
 	    	//affichage des possibilités de déplacement pour une pièce donnée
-	    	this.showPossibilities = function(){
+	    	this.findPossibilities = function(){
 	    		//variables
 	    		var tab = [];
 	    		var signeColor = this.color =='black'?-1:1;
@@ -248,16 +248,20 @@ $(function(){
 						console.log('piece non répertoriée');
 				}
 
-				//affichage ou non des possibilités listées dans tab
-				if(!tab.length){
-					console.log('pas de possibilités');	
-				}
-				else{
-					showTabPossibility(tab);
-				}
+				return tab;
 
 			}
 
+			this.showPossibilities = function(){
+				var tabPossibilities = this.findPossibilities();
+				if(!tabPossibilities.length){
+					$('#board-info-coup').html('Vous ne pouvez pas bouger cette piece.');	
+				}
+				else{
+					$('#board-info-coup').html('');
+					showTabPossibility(tabPossibilities);
+				}
+			}
 
 			//Générer l'image html de la piece
 			this.getPath = function(){
@@ -285,12 +289,12 @@ $(function(){
 			}
 	}
 
-	$('#game-interface').hide();
-
 	//Variables globales
 	var $board = $("#board");
 	haveToShoWPossibilities = true;
 	tabPieces = new Array();
+
+	$('#game-interface').hide();
 
 	var tour1_w		=	new Piece("tour",1,1,'black');		var cavalier1_w	=	new Piece("cheval",1,2,'black');
 	var fou1_w 		= 	new Piece("fou",1,3,'black');		var reine_w 	=	new Piece("reine",1,4,'black');
@@ -310,7 +314,13 @@ $(function(){
 	};
 
 	//Functions
+	function fenToPieces(){
+		console.log(chess);
+	}
+
 	function initBoard(){
+		chess = new Chess();
+		console.log(chess);
 		$board.empty();
 		var casepleine = true;
 		//foreach rows
@@ -320,6 +330,7 @@ $(function(){
 			for (var j = 1; j<=8; j++) {
 				var couleurCase = casepleine ? "case-pleine" : "case-vide";
 				d=document.createElement('div');
+				// String.fromCharCode(97) => "a"
 				$col = $(d);
 				$col.attr({
 						row : i,
@@ -355,29 +366,59 @@ $(function(){
 
 	function startMatch(){
 		echecEtMat = false;
-		tour='white'; //Or black
+		tour = 'white'; //Or black
+		showActualPlayer();
+		whiteBigRoque = true;
+		whiteLittleRoque = true;
+		blackBigRoque = true;
+		blackLittleRoque = true;
+		orientation = 'white';
 	}
 
 	function switchPlayer() {
 		tour = tour=='white'?'black':'white';
 	}
 
+	function showActualPlayer(){
+		var msgActualPlayer;
+		if(tour == 'white'){
+			msgActualPlayer = 'Aux blancs à jouer';
+			$('#player-2').css("border", "");
+			$('#player-1').css('border','1px solid blue');
+		}
+		else{
+			msgActualPlayer = 'Aux noirs à jouer';
+			$('#player-1').css("border", "");
+			$('#player-2').css('border','1px solid blue');
+		}
+
+		$('board-info-turn').html(msgActualPlayer);
+	}
+
+	function switchOrientation(){
+		console.log('switch orientation');
+	}
+
 //Events
 
-	$('body').on('click', '#btn-start-game', function(){
+	$('body').on('submit', '#form-name-players', function(event){
+ 		event.preventDefault();
 		nomP1 = $('#name-player-1').val();
 		nomP2 = $('#name-player-2').val();
 		if(nomP1.length>0 && nomP2.length>0){
 			startGame();
 			$('.popupStart').hide();
 		}
-		
 	});
 
 	//Initialisation du plateau
 	$('body').on('click', '#btn-new-game', function(){
 		initBoard();
 		startMatch();
+	});
+
+	$('body').on('click', '#btn-save-game', function(){
+		showFen();
 	});
 
 	//Déplacement de la piece
@@ -399,6 +440,7 @@ $(function(){
 		;
 
 		switchPlayer();
+		showActualPlayer();
 	});
 
 	//Affichage des différentes possibilités de déplacement pour la piece sélectionnée
