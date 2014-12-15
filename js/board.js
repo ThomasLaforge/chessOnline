@@ -249,7 +249,6 @@ $(function(){
 				}
 
 				return tab;
-
 			}
 
 			this.showPossibilities = function(){
@@ -362,17 +361,6 @@ $(function(){
 		startMatch();
 		$('#p1-name').html(nomP1);
 		$('#p2-name').html(nomP2);
-	}
-
-	function startMatch(){
-		echecEtMat = false;
-		tour = 'white'; //Or black
-		showActualPlayer();
-		whiteBigRoque = true;
-		whiteLittleRoque = true;
-		blackBigRoque = true;
-		blackLittleRoque = true;
-		orientation = 'white';
 	}
 
 	function switchPlayer() {

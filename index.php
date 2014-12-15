@@ -35,12 +35,12 @@
 
 			<div class="clear"></div>
 
-<!-- 			<div class="board-info">
-	<input type="button" value="Restart" class="btn" id="btn-new-game"/>
-	<input type="button" value="Save" class="btn" id="btn-save-game"/>
-	<div id="board-info-coup" class="board-info-coup"></div>
-	<div id="board-info-turn" class="board-info-turn"></div>
-</div> -->
+			<div class="board-info">
+				<input type="button" value="Restart" class="btn" id="btn-new-game"/>
+				<input type="button" value="Save" class="btn" id="btn-save-game"/>
+				<div id="board-info-coup" class="board-info-coup"></div>
+				<div id="board-info-turn" class="board-info-turn"></div>
+			</div>
 
 		</div>
 
